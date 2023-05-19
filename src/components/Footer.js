@@ -59,8 +59,6 @@ const Wrapper = styled.section`
     margin: 0;
   }
 
-  
-
   .contact-short {
     max-width: 60vw;
     margin: auto;

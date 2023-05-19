@@ -169,38 +169,33 @@ const Nav = () => {
             <NavLink
               to="/"
               className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
+              onClick={() => setMenuIcon(false)}
+            >
               Home
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/about"
+              to="/books"
               className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/products"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
+              onClick={() => setMenuIcon(false)}
+            >
               Books
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/contact"
+              to="/login"
               className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
-              Contact
+              onClick={() => setMenuIcon(false)}
+            >
+              Login
             </NavLink>
           </li>
           <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item"> 10 </span>
+              {/* <span className="cart-total--item"> 0 </span> */}
             </NavLink>
           </li>
         </ul>
