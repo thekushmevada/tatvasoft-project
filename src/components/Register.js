@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const Login = () => {
+const Register = () => {
   return (
     <Wrapper className="test">
-      <h1>Login Page</h1>
+      <h1>Register Page</h1>
     </Wrapper>
   );
 };
@@ -13,4 +13,4 @@ const Wrapper = styled.section`
   height: 50vh;
 `;
 
-export default Login;
+export default Register;

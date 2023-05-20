@@ -5,6 +5,10 @@ import { Button } from "../styles/Button";
 // import { FaDiscord, FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
+  function openPage ()  {
+    window.location.href = "https://www.tatvasoft.com/";
+  }
+
   return (
     <>
       <Wrapper>
@@ -39,7 +43,7 @@ const Footer = () => {
           <div className="footer-bottom--section">
             <hr />
             <div className="container grid grid-two-column ">
-              <p>
+              <p onClick={openPage} >
                 @{new Date().getFullYear()} TatvaSoft.com | All Rights Reserved
               </p>
               <div>
