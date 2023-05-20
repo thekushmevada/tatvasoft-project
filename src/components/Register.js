@@ -44,7 +44,7 @@ export default class SignUp extends Component {
   render() {
     return (
       <Wrapper>
-        <h2 className="common-heading">Create account</h2>
+        <h2 className="intro-data common-heading">Create account</h2>
           <div className="container">
             <div className="contact-form">
               <form
@@ -163,15 +163,8 @@ export default class SignUp extends Component {
 // export default Contact;
 
 const Wrapper = styled.section`
-  padding: 9rem 0 5rem 0;
+  padding: 7rem 0 5rem 0;
   text-align: center;
-
-  .main-hr {
-    // display: grid;
-    // align-item: center;
-    // justify-content: center;
-    // width: 50%;
-  }
 
   .container {
     margin-top: 6rem;

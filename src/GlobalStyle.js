@@ -66,6 +66,11 @@ h3 {
   font-weight: 400;
 }
 
+h4 {
+  font-size: 2.0rem;
+  font-weight: 400;
+}
+
 p, button {
   color: ${({ theme }) => theme.colors.text};
   font-size: 1.65rem;
@@ -78,7 +83,7 @@ a {
 }
 
 li {
-  list-style: none;
+  // list-style: none;
 }
 
 
