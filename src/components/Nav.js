@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
-import { Button } from "../styles/Button";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
@@ -185,11 +184,13 @@ const Nav = () => {
             </NavLink>
           </li>
           <li>
-            <Button>
-              <NavLink to="/register" onClick={() => setMenuIcon(false)}>
-                SignUp
-              </NavLink>
-            </Button>
+            <NavLink
+              to="/register"
+              className="navbar-link "
+              onClick={() => setMenuIcon(false)}
+            >
+              Register
+            </NavLink>
           </li>
           <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">

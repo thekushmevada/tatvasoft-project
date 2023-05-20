@@ -62,7 +62,7 @@ h1 {
   }
 
 h3 {
-  font-size: 1.8rem;
+  font-size: 2.3rem;
   font-weight: 400;
 }
 
@@ -136,7 +136,7 @@ ${"" /* resuable code section  */}
       border-radius: 2rem;
     }
 
-input, textarea{
+input, textarea, select{
     max-width: 50rem;
     color: ${({ theme }) => theme.colors.black};
     padding: 1.6rem 2.4rem;
