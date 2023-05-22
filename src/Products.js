@@ -8,8 +8,8 @@ const Products = () => {
     <Wrapper className="test">
       <h1>In Maintenance...</h1>
       <NavLink to="/home">
-              <Button>Go Home</Button>
-            </NavLink>
+        <Button>Go Home</Button>
+      </NavLink>
     </Wrapper>
   );
 };
@@ -68,6 +68,5 @@ const Wrapper = styled.section`
     }
   }
 `;
-
 
 export default Products;

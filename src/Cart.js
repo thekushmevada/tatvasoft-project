@@ -1,7 +1,66 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { Button } from "./styles/Button";
+import CartItem from "./components/CartItem";
 
 const Cart = () => {
-  return <Wrapper><h1>Cart Page</h1></Wrapper>;
+  return (
+    <Wrapper>
+      <div className="container">
+        <div className="cart_heading grid grid-five-column">
+          <p>Item</p>
+          <p className="cart-hide">Price</p>
+          <p>Quantity</p>
+          <p className="cart-hide">Subtotal</p>
+          <p>Remove</p>
+        </div>
+        <hr />
+
+        <div className="cart-item">
+          {/* {cart.map((curElem) => {
+            return <CartItem key={curElem._id} {...curElem} />;
+          })} */}
+          <CartItem />;
+          <CartItem />;
+        </div>
+
+
+        <div className="cart-two-button">
+          <NavLink to="/books">
+            <Button> continue Shopping </Button>
+          </NavLink>
+          <Button className="btn btn-clear" onClick={console.log("Hello")}>
+            clear cart
+          </Button>
+        </div>
+
+
+        <div className="order-total--amount">
+          <div className="order-total--subdata">
+            <div>
+              <p>subtotal:</p>
+              <p>
+                {/* <FormatPrice price={total_price} /> */}
+              </p>
+            </div>
+            <div>
+              <p>shipping fee:</p>
+              <p>
+                {/* <FormatPrice price={shipping_fee} /> */}
+              </p>
+            </div>
+            <hr />
+            <div>
+              <p>order total:</p>
+              <p>
+                {/* <FormatPrice price={shipping_fee + total_price} /> */}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`
