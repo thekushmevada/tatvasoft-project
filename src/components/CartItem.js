@@ -20,12 +20,12 @@ const CartItem = () => {
         </div>
         <div>
           <p>how to win friends and influence people</p>
-          <div className="color-div">
+          {/* <div className="color-div">
             <p>color:</p>
             <div
               className="color-style"
               style={{ backgroundColor: 'blue', color: 'red' }}></div>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* price   */}
