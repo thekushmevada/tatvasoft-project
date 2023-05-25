@@ -37,15 +37,16 @@ const App = () => {
     },
   };
 
+  const isLoggedIn = window.localStorage.getItem("loggedIn");
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <GlobalStyle />
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/books" element={<Products />} />
+          <Route path="/" element={isLoggedIn === "true" ? <Products/> : <Home/>}  />
+          <Route path="/books" element={isLoggedIn === "true" ? <Products/> : <Home/>} />
           <Route path="/singleproduct/:id" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/register" element={<Register />} />
@@ -58,3 +59,5 @@ const App = () => {
 };
 
 export default App;
+
+

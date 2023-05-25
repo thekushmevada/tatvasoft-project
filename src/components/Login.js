@@ -13,7 +13,10 @@ const Login = () => {
       .post("https://book-e-sell-node-api.vercel.app/api/user/login", state)
       .then((res) => {
         console.log(res);
-        toast.info('Logged in Succesfully!', {
+        window.localStorage.setItem("token", res.data);
+        window.localStorage.setItem("loggedIn", true);
+
+        toast.info("Logged in Succesfully!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -22,8 +25,9 @@ const Login = () => {
           draggable: true,
           progress: undefined,
           theme: "colored",
-          });
-          
+        });
+
+        window.location.href="/books";
       })
       .catch((err) => console.log(err));
   };
@@ -59,13 +63,14 @@ const Login = () => {
             // value=""
             onChange={(e) => setState({ ...state, password: e.target.value })}
           />
+          
 
-          <div>
+          <div >
             <input type="submit" value="LogIn" />
           </div>
         </form>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </Wrapper>
   );
 };

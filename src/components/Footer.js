@@ -31,7 +31,7 @@ const Footer = () => {
 
         <footer>
           <div className="container logo">
-            <NavLink to="/">
+            <NavLink to="/books">
               <img
                 src="./images/images-removebg-preview.png"
                 alt="my logo img"

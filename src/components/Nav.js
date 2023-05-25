@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { Button } from "../styles/Button";
+import { ToastContainer, toast } from "react-toastify";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
 
   const Nav = styled.nav`
     .navbar-lists {
-     
       display: flex;
       gap: 4.8rem;
       align-items: center;
@@ -171,33 +171,57 @@ const Nav = () => {
     <Nav>
       <div className={menuIcon ? "navbar active" : "navbar"}>
         <ul className="navbar-lists">
-          <li>
-            <NavLink
-              to="/"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/books"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}
-            >
-              Books
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/register"
-              // className="navbar-link "
-              onClick={() => setMenuIcon(false)}
-            >
-              <Button>SignUp</Button>
-            </NavLink>
-          </li>
+
+          {window.localStorage.getItem("loggedIn", true) ? (
+            <li>
+              <Button
+                onClick={() => {
+                  window.localStorage.clear();
+
+                  toast.info("Logged out Succesfully!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                  });
+
+                  window.location.href = "./";
+                }}
+              >
+                Log Out
+              </Button>
+            </li>
+          ) : (
+            <li>
+              <Button
+                onClick={() => {
+                  window.location.href = "./register";
+                }}
+              >
+                SignUp
+              </Button>
+            </li>
+          )}
+          
+            {/* <p>|</p> */}
+          
+
+          {window.localStorage.getItem("loggedIn", true) ? null : (
+            <li>
+              <Button
+                onClick={() => {
+                  window.location.href = "./";
+                }}
+              >
+                Login
+              </Button>
+            </li>
+          )}
+
           <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
@@ -220,6 +244,7 @@ const Nav = () => {
           />
         </div>
       </div>
+      <ToastContainer />
     </Nav>
   );
 };

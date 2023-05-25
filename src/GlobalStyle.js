@@ -116,6 +116,7 @@ ${"" /* resuable code section  */}
   grid-template-columns: repeat(5, 1fr);
 }
 
+
   .common-heading {
       font-size: 3.8rem;
       font-weight: 600;

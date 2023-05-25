@@ -29,7 +29,7 @@ const Cart = () => {
           <NavLink to="/books">
             <Button> continue Shopping </Button>
           </NavLink>
-          <Button className="btn btn-clear" onClick={console.log("Hello")}>
+          <Button className="btn btn-clear">
             clear cart
           </Button>
         </div>
