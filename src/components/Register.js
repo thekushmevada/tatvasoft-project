@@ -1,45 +1,65 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Navigate } from "react-router-dom";
 
 export default class SignUp extends Component {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     username: "",
-  //     email: "",
-  //     Message: ""
-  //   };
-  //   this.handleSubmit = this.handleSubmit.bind(this);
-  // }
+  constructor(props){
+    super(props);
+    this.state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      role: "",
+      password: "",
+      roleId: ""
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    
+  }
 
-  // handleSubmit(e) {
-  //     e.preventDefault();
-  //       const {username, email, Message } =
-  //         this.state;
-  //       // console.log(username, email, Message);
-  //       fetch("https://productssapi.onrender.com/inquiry", {
-  //         method: "POST",
-  //         crossDomain: true,
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Accept: "application/json",
-  //           "Access-Control-Allow-Origin": "*",
-  //         },
-  //         body: JSON.stringify({
-  //           username,
-  //           email,
-  //           Message,
-  //         }),
-  //       })
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //           //console.log(data, "userRegister");
-  //           if (data.status === "ok") {
-  //             alert("Your Query has been registered successful");
-  //             window.location.href = "./contact";
-  //           }
-  //         });
-  // }
+  
+
+  handleSubmit(e) {
+      e.preventDefault();
+        const {firstName, lastName, email, password , roleId } =
+          this.state;
+      
+        // console.log(firstName + " " + lastName + " " + email + " "  + password + " " + " " + roleId) ;
+        fetch("https://book-e-sell-node-api.vercel.app/api/user", {
+          method: "POST",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+            roleId
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data, "userRegister");
+            <Navigate to="/" replace={true} />
+            toast.info('Registered Succesfully!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
+              
+          });
+  }
 
   render() {
     return (
@@ -48,8 +68,8 @@ export default class SignUp extends Component {
           <div className="container">
             <div className="contact-form">
               <form
-                // onSubmit={this.handleSubmit}
-                // method="POST"
+                onSubmit={this.handleSubmit}
+                method="POST"
                 className="contact-inputs"
               >
                 <h3>Personal Information</h3>
@@ -60,34 +80,34 @@ export default class SignUp extends Component {
                   <input
                     type="text"
                     placeholder="First Name"
-                    name="firstname"
+                    name="firstName"
                     required
                     autoComplete="off"
                     className="jagya"
                     // value=""
-                    // onChange={(e) => this.setState({ username: e.target.value })}
+                    onChange={(e) => this.setState({ firstName: e.target.value })}
                   />
                   <input
                     type="text"
                     placeholder="Last name"
-                    name="lastname"
+                    name="lastName"
                     required
                     autoComplete="off"
                     className="jagya"
                     // value=""
-                    // onChange={(e) => this.setState({ username: e.target.value })}
+                    onChange={(e) => this.setState({ lastName: e.target.value })}
                   />
                 </div>
                 <div className="grid-two-column">
                   <input
                     type="email"
                     placeholder="Email"
-                    name="Email"
+                    name="email"
                     required
                     autoComplete="off"
                     className="jagya"
                     // value=""
-                    // onChange={(e) => this.setState({ email: e.target.value })}
+                    onChange={(e) => this.setState({ email: e.target.value })}
                   />
 
                   <input
@@ -98,7 +118,7 @@ export default class SignUp extends Component {
                     autoComplete="off"
                     className="jagya"
                     // value=""
-                    // onChange={(e) => this.setState({ email: e.target.value })}
+                    // onChange={(e) => this.setState({ phone: e.target.value })}
                   />
                 </div>
 
@@ -116,7 +136,7 @@ export default class SignUp extends Component {
                     autoComplete="off"
                     className="jagya"
                     // value=""
-                    // onChange={(e) => this.setState({ email: e.target.value })}
+                    onChange={(e) => this.setState({ password: e.target.value })}
                   />
                   <input
                     type="password"
@@ -138,8 +158,18 @@ export default class SignUp extends Component {
                 {/* <div className=""> */}
                   <select
                     name="roles"
-                    id="roles"
+                    id="role"
                     className="jagya sort-selection--style"
+                    onChange={(e) => {
+                      // console.log(e.target.value);
+                      this.setState({ role: e.target.value })
+                      if(e.target.value === "buyer"){
+                        this.setState({roleId: 2})
+                      }
+                      else{
+                        this.setState({roleId: 3})
+                      }
+                    }}
                   >
                     <option value="" selected disabled hidden>
                       Choose Role
@@ -155,6 +185,7 @@ export default class SignUp extends Component {
               </form>
             </div>
           </div>
+          <ToastContainer/>
       </Wrapper>
     );
   }

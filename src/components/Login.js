@@ -1,26 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import { Navigate } from "react-router-dom";
 
 const Login = () => {
+  const [state, setState] = useState({ email: "", password: "" });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("https://book-e-sell-node-api.vercel.app/api/user/login", state)
+      .then((res) => {
+        console.log(res);
+        toast.info('Logged in Succesfully!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+          
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <Wrapper>
-        
       <div className="contact-form">
         <form
-          // onSubmit={this.handleSubmit}
+          onSubmit={handleSubmit}
           // method="POST"
           className="contact-inputs"
         >
-            
           <input
             type="email"
             placeholder="Email"
-            name="Email"
+            name="email"
             required
             autoComplete="off"
             // className="jagya"
             // value=""
-            // onChange={(e) => this.setState({ email: e.target.value })}
+            onChange={(e) => setState({ ...state, email: e.target.value })}
           />
 
           <br />
@@ -34,7 +57,7 @@ const Login = () => {
             autoComplete="off"
             // className="jagya"
             // value=""
-            // onChange={(e) => this.setState({ email: e.target.value })}
+            onChange={(e) => setState({ ...state, password: e.target.value })}
           />
 
           <div>
@@ -42,6 +65,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <ToastContainer/>
     </Wrapper>
   );
 };
