@@ -89,7 +89,7 @@ const Wrapper = styled.section`
     }
   }
   .card {
-    background-color: #fff;
+    // background-color: #fff;
     border-radius: 1rem;
     .card-data {
       padding: 0 2rem;
