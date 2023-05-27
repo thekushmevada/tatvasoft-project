@@ -3,25 +3,25 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../styles/Button";
 import styled from "styled-components";
 
-const Product = ({ base64image, name, category, price, description }) => {
-  //   const { _id, name, base64image, price , category} = curElem;
+const Product = (book) => {
+  //  { id, name, base64image, price , category} = curElem;
   return (
     // <NavLink to={`/singleproduct/${_id}`}>
     <Wrapper>
       <div className="card">
         <figure>
-          <img src={base64image} alt={name} />
-          <figcaption className="caption">{category}</figcaption>
+          <img src={book.base64image} alt={book.name} />
+          <figcaption className="caption">{book.category}</figcaption>
         </figure>
 
         <div className="card-data">
           <div className="card-data-flex">
-            <h3>{name}</h3>
-            <p className="card-data--price">{price}</p>
+            <h3>{book.name.slice(0, 20) + "..."}</h3>
+            <p className="card-data--price">{"₹" + book.price}</p>
           </div>
-          {/* <p>{description}</p> */}
+          <p>{book.description.slice(0, 35) + "..."}</p>
         </div>
-        <NavLink to="/">
+        <NavLink to="/cart">
           <Button className="btn-clear btn-c"> Add to cart</Button>
         </NavLink>
       </div>
@@ -31,6 +31,10 @@ const Product = ({ base64image, name, category, price, description }) => {
 };
 
 const Wrapper = styled.section`
+  .card {
+    // background-color: ${({ theme }) => theme.colors.bg};
+    background-color: #f2f3ff;
+  }
   .btn-clear {
     background-color: #e74c3c;
   }
