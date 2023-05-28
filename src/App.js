@@ -10,6 +10,7 @@ import { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
+import SearchBox from "./components/SearchBox";
 
 const App = () => {
   const theme = {
@@ -44,6 +45,7 @@ const App = () => {
       <Router>
         <GlobalStyle />
         <Header />
+        <SearchBox />
         <Routes>
           <Route path="/" element={isLoggedIn === "true" ? <Products/> : <Home/>}  />
           <Route path="/books" element={isLoggedIn === "true" ? <Products/> : <Home/>} />
