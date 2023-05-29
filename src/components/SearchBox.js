@@ -1,12 +1,31 @@
-import { Button } from "../styles/Button";
-import React from "react";
-import { FaSearch } from "react-icons/fa";
+import axios from "axios";
+// import { Button } from "../styles/Button";
+import React, { useState } from "react";
+// import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 
-
 const SearchBox = () => {
+  const [input, setinput] = useState("");
+  const [results, setResults] = useState([]);
+
+  const fetchData = async (value) => {
+    axios.get(`https://book-e-sell-node-api.vercel.app/api/book/search?keyword=${value}`)
+      .then((res) => {
+        // console.log(res.data)
+        setResults(res.data.result)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  };
+
+  const handleChange = (value) => {
+    setinput(value);
+    fetchData(value);
+  };
   return (
     <Wrapper className="">
+      
       <input
         type="text"
         placeholder="Search"
@@ -14,88 +33,47 @@ const SearchBox = () => {
         required
         autoComplete="off"
         className=""
-        // value=""
-        onChange={(e) => this.setState({ firstName: e.target.value })}
+        value={input}
+        onChange={(e) => handleChange(e.target.value)}
       />
+      <br />
+      <div className="result-list">
+        {results?.length  && results.map((result,id) => {
+          return <div key={id}>{result.name}</div>;
+        })}
+      </div>
       
-      <Button>
-       <FaSearch /> Search
-      </Button>
+      {/* <Button className="btn-search">
+        <FaSearch /> Search
+      </Button> */}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.section`
-padding: 0 4.8rem;
+  padding: 0 4.8rem;
   height: 10rem;
   background-color: ${({ theme }) => theme.colors.bg};
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-    input {
-        width:50%;
-        margin: 0 1rem;
+  input {
+    width: 50%;
+    margin: 0 1rem;
+
+    .result-list {
+      font-size: 2rem;
+      width: 56%;
+      backgroud-color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0px 0px 8px #ddd;
+      border-radius: 10px;
+      max-height: 300px;
+      overflow-y: scroll;
     }
-`
+  }
+`;
 
 export default SearchBox;
-
-// import React from "react";
-// import { TextField } from "@material-ui/core";
-
-// const SearchBox = () => {
-//   return (
-//     <div className="header-search-outer">
-//       <div className="header-search-inner">
-//         <div className="text-wrapper">
-//           <TextField
-//             id="text"
-//             name="text"
-//             placeholder="What are you looking for..."
-//             variant="outlined"
-//             // value={query}
-//             // onChange={(e) => setquery(e.target.value)}
-//           />
-
-//           {/* {openSearchResult && ( */}
-
-//           {/* <div className="product-listing">
-//                         {bookList?.length === 0 && (
-//                           <p className="no-product">No product found</p>
-//                         )} */}
-
-//           {/* <p className="loading">Loading....</p> */}
-//           {/* <List className="related-product-list">
-//                           {bookList?.length > 0 &&
-//                             bookList.map((item, i) => {
-//                               return (
-//                                 <ListItem key={i}>
-//                                   <div className="inner-block">
-//                                     <div className="left-col">
-//                                       <span className="title">{item.name}</span>
-//                                       <p>{item.description}</p>
-//                                     </div>
-//                                     <div className="right-col">
-//                                       <span className="price">
-//                                         {item.price}
-//                                       </span>
-//                                       <Link onClick={() => addToCart(item)}>
-//                                         Add to cart
-//                                       </Link>
-//                                     </div>
-//                                   </div>
-//                                 </ListItem>
-//                               );
-//                             })}
-//                         </List>
-//                       </div> */}
-
-//           {/* )} */}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SearchBox;
