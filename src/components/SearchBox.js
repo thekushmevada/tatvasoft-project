@@ -44,10 +44,15 @@ const SearchBox = () => {
         <div className="result-list ">
           {results?.length > 0 &&
             results.map((result, id) => {
-              return <div key={id}> {result.name} </div>;
+              return (
+                <div className="result-box">
+                  <div key={id}> {result.name} </div>
+                  <button type="submit" >Add to cart</button>
+                </div>
+              );
             })}
         </div>
-       )} 
+      )}
     </Wrapper>
   );
 };
@@ -57,17 +62,20 @@ const Wrapper = styled.section`
   height: 10rem;
   background-color: ${({ theme }) => theme.colors.bg};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   input {
     width: 50%;
     margin: 0 1rem;
+
   }
   .result-list {
+
     background-color: white;
     font-size: 1.5rem;
-    width: 35%;
+    width: auto;
     display: flex;
     flex-direction: column;
     box-shadow: 0px 0px 8px #ddd;
@@ -75,9 +83,9 @@ const Wrapper = styled.section`
     max-height: 300px;
     overflow-y: scroll;
   }
-  .flex-two-rows {
+  .result-box{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
   }
 `;
 
