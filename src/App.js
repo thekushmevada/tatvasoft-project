@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import SearchBox from "./components/SearchBox";
+import { AuthWrapper } from "./context/auth";
 
 const App = () => {
   const theme = {
@@ -38,23 +39,24 @@ const App = () => {
     },
   };
 
-  const isLoggedIn = window.localStorage.getItem("loggedIn");
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
+        <AuthWrapper>
         <GlobalStyle />
         <Header />
         <SearchBox />
         <Routes>
-          <Route path="/" element={isLoggedIn === "true" ? <Products/> : <Home/>}  />
-          <Route path="/books" element={isLoggedIn === "true" ? <Products/> : <Home/>} />
+          <Route path="/" element={localStorage.getItem("Shared.LocalStorageKeys.USER") ? <Products/> : <Home/>}  />
+          <Route path="/books" element={localStorage.getItem("Shared.LocalStorageKeys.USER") ? <Products/> : <Home/>} />
           <Route path="/singleproduct/:id" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />
+        </AuthWrapper>
       </Router>
     </ThemeProvider>
   );

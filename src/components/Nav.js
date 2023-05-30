@@ -5,9 +5,11 @@ import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { Button } from "../styles/Button";
 import { ToastContainer, toast } from "react-toastify";
+import { useAuthContext } from "../context/auth";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
+  const authContext = useAuthContext();
 
   const Nav = styled.nav`
     .navbar-lists {
@@ -172,11 +174,11 @@ const Nav = () => {
       <div className={menuIcon ? "navbar active" : "navbar"}>
         <ul className="navbar-lists">
 
-          {window.localStorage.getItem("loggedIn", true) ? (
+          {localStorage.getItem("Shared.LocalStorageKeys.USER") ? (
             <li>
               <Button
                 onClick={() => {
-                  window.localStorage.clear();
+                  authContext.signOut();
 
                   toast.info("Logged out Succesfully!", {
                     position: "top-right",
@@ -210,7 +212,7 @@ const Nav = () => {
             {/* <p>|</p> */}
           
 
-          {window.localStorage.getItem("loggedIn", true) ? null : (
+          {localStorage.getItem("Shared.LocalStorageKeys.USER") ? null : (
             <li>
               <Button
                 onClick={() => {

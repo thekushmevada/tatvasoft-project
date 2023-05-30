@@ -7,25 +7,28 @@ import styled from "styled-components";
 const SearchBox = () => {
   const [input, setinput] = useState("");
   const [results, setResults] = useState([]);
+  const [openSearchResult, setOpenSearchResult] = useState(false);
 
   const fetchData = async (value) => {
-    axios.get(`https://book-e-sell-node-api.vercel.app/api/book/search?keyword=${value}`)
+    axios
+      .get(
+        `https://book-e-sell-node-api.vercel.app/api/book/search?keyword=${value}`
+      )
       .then((res) => {
-        // console.log(res.data)
-        setResults(res.data.result)
+        setResults(res.data.result);
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   };
 
   const handleChange = (value) => {
     setinput(value);
     fetchData(value);
+    setOpenSearchResult(true);
   };
   return (
-    <Wrapper className="">
-      
+    <Wrapper>
       <input
         type="text"
         placeholder="Search"
@@ -36,16 +39,15 @@ const SearchBox = () => {
         value={input}
         onChange={(e) => handleChange(e.target.value)}
       />
-      <br />
-      <div className="result-list">
-        {results?.length  && results.map((result,id) => {
-          return <div key={id}>{result.name}</div>;
-        })}
-      </div>
-      
-      {/* <Button className="btn-search">
-        <FaSearch /> Search
-      </Button> */}
+      {/* <br /> */}
+      {openSearchResult && (
+        <div className="result-list ">
+          {results?.length > 0 &&
+            results.map((result, id) => {
+              return <div key={id}> {result.name} </div>;
+            })}
+        </div>
+       )} 
     </Wrapper>
   );
 };
@@ -61,18 +63,21 @@ const Wrapper = styled.section`
   input {
     width: 50%;
     margin: 0 1rem;
-
-    .result-list {
-      font-size: 2rem;
-      width: 56%;
-      backgroud-color: #FFFFFF;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0px 0px 8px #ddd;
-      border-radius: 10px;
-      max-height: 300px;
-      overflow-y: scroll;
-    }
+  }
+  .result-list {
+    background-color: white;
+    font-size: 1.5rem;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 8px #ddd;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  .flex-two-rows {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
