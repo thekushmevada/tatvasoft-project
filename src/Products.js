@@ -16,8 +16,8 @@ import ReactPaginate from "react-paginate";
 const Products = () => {
   const [books, setBooks] = useState([]);
   const [pageCount, setPageCount] = useState(1);
-  // const [currentPage , setcurrentPage] = useState(1);
   const currentPage = useRef();
+  const [totalbooks, setTotalBooks] = useState([]);
 
   // useEffect(() => {
   //   axios
@@ -43,28 +43,46 @@ const Products = () => {
         `https://book-e-sell-node-api.vercel.app/api/book?pageSize=3&pageIndex=${currentPage.current}`
       )
       .then((res) => {
+        // console.log(res.data.result);
         setPageCount(res.data.result.totalPages);
         setBooks(res.data.result.items);
+        setTotalBooks(res.data.result.totalItems);
       });
   }
 
   return (
     <Wrapper className="container">
-      {/* <div className="grid grid-three-column"> */}
-      {books && books.length > 0 && (
-        <div className="grid grid-three-column">
-          {books.map((book) => (
-            <Product
-              base64image={book.base64image}
-              name={book.name}
-              category={book.category}
-              description={book.description}
-              price={book.price}
-            />
-          ))}
-        </div>
-      )}
-      {/* </div> */}
+      <div className="flexbox">
+        <h2>Total Items : {totalbooks}</h2>
+
+        <input placeholder="search book" />
+        <select>
+          <option selected hidden disabled>
+            Sort by:
+          </option>
+          <option>A-Z</option>
+          <option disabled></option>
+          <option>Z-A</option>
+        </select>
+      </div>
+      <br />
+
+      <div className="jagya">
+        {books && books.length > 0 && (
+          <div className="grid grid-three-column">
+            {books.map((book) => (
+              <Product
+                base64image={book.base64image}
+                name={book.name}
+                category={book.category}
+                description={book.description}
+                price={book.price}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+      <br />
       <br />
       <ReactPaginate
         breakLabel="..."
@@ -74,7 +92,7 @@ const Products = () => {
         pageCount={pageCount}
         previousLabel="< previous"
         renderOnZeroPageCount={null}
-        containerClassName="pagination justify-content-center"
+        containerClassName="pagination justify-content-center pagination-lg"
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"
@@ -88,12 +106,31 @@ const Products = () => {
 };
 
 const Wrapper = styled.section`
-  padding: 9rem 0;
+  padding: 5rem 0;
   // background-color: ${({ theme }) => theme.colors.bg};
   .logo {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .flexbox {
+    display: flex;
+    justify-content: space-between;
+    input {
+      height: 5rem;
+      width: 25rem;
+    }
+    select {
+      height: 5rem;
+      width: 25rem;
+    }
+  }
+  .paginate {
+    background-color: red;
+    height: 4rem;
+  }
+  .jagya {
+    margin-top: 4rem;
   }
   .container {
     max-width: 120rem;
@@ -157,6 +194,7 @@ const Wrapper = styled.section`
       color: ${({ theme }) => theme.colors.text};
       text-transform: capitalize;
     }
+
     .card-data--price {
       color: ${({ theme }) => theme.colors.helper};
     }

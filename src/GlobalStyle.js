@@ -149,6 +149,7 @@ input, textarea, select{
     border: 1px solid ${({ theme }) => theme.colors.border};
     text-transform: uppercase;
    box-shadow: ${({ theme }) => theme.colors.shadowSupport};
+   font-size: 1.3rem;
 }
     input[type="submit"]{
     max-width: 16rem;

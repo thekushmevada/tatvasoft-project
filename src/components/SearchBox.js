@@ -30,8 +30,8 @@ const SearchBox = () => {
     <Wrapper>
       <input
         type="text"
-        placeholder="Search"
-        name="firstName"
+        placeholder="Search  items  globally"
+        name="search"
         required
         autoComplete="off"
         className=""
