@@ -10,13 +10,6 @@ const Login = () => {
   const [state, setState] = useState({ email: "", password: "" });
   const authContext = useAuthContext();
 
-  function afterLogin(res) {
-    authContext.setUser(res);
-
-    
-
-    window.location.href = "/books";
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +26,8 @@ const Login = () => {
           progress: undefined,
           theme: "colored",
         });
-        afterLogin(res);
+        authContext.setUser(res);
+    window.location.href = "/books";
       })
       .catch((err) => console.log(err));
   };

@@ -1,7 +1,6 @@
 import axios from "axios";
-// import { Button } from "../styles/Button";
 import React, { useState } from "react";
-// import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SearchBox = () => {
@@ -23,9 +22,9 @@ const SearchBox = () => {
   };
 
   const handleChange = (value) => {
-    setinput(value);
-    fetchData(value);
-    setOpenSearchResult(true);
+      setOpenSearchResult(true);
+      setinput(value);
+      fetchData(value);
   };
   return (
     <Wrapper>
@@ -39,7 +38,7 @@ const SearchBox = () => {
         value={input}
         onChange={(e) => handleChange(e.target.value)}
       />
-      {/* <br /> */}
+
       {openSearchResult && (
         <div className="result-list ">
           {results?.length > 0 &&
@@ -47,12 +46,19 @@ const SearchBox = () => {
               return (
                 <div className="result-box">
                   <div key={id}> {result.name} </div>
-                  <button type="submit" >Add to cart</button>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Link to="/productlist">
+                      <button type="submit" className="add-to-cart-button">
+                        Add to cart
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               );
             })}
         </div>
       )}
+
     </Wrapper>
   );
 };
@@ -69,10 +75,9 @@ const Wrapper = styled.section`
   input {
     width: 50%;
     margin: 0 1rem;
-
   }
   .result-list {
-
+    // margin-top: 20px;
     background-color: white;
     font-size: 1.5rem;
     width: auto;
@@ -85,8 +90,25 @@ const Wrapper = styled.section`
   }
   .result-box{
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffff;
+    padding: 10px;
+    margin-bottom: 10px;
   }
+  .result-box > div {
+    margin-right: 10px;
+  }
+  .add-to-cart-button {
+    background-color: ${({ theme }) => theme.colors.btn};
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .add-to-cart-button:hover {
+    background-color: ${({ theme }) => theme.colors.border};
+  }
 `;
 
 export default SearchBox;

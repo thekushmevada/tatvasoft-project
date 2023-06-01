@@ -1,18 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import Product from "./components/Product";
+import ReactPaginate from "react-paginate";
+
+// API Data
+// pageSize = ek page ma total books
+// totalItems = total books
+// pageIndex = kaya page par chu hu
+// totalPages = ketla pages aave che
+
+// Current Data
+// PageCount = total ketla page api mathi aave che
 
 const Products = () => {
   const [books, setBooks] = useState([]);
+  const [pageCount, setPageCount] = useState(1);
+  // const [currentPage , setcurrentPage] = useState(1);
+  const currentPage = useRef();
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://book-e-sell-node-api.vercel.app/api/book/all")
+  //     .then((res) => {
+  //       setBooks(res.data.result);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    axios
-      .get("https://book-e-sell-node-api.vercel.app/api/book/all")
-      .then((res) => {
-        setBooks(res.data.result);
-      });
+    currentPage.current = 1;
+    getPaginatedUsers();
   }, []);
+
+  function handlePageClick(e) {
+    currentPage.current = e.selected + 1;
+    getPaginatedUsers();
+  }
+
+  function getPaginatedUsers() {
+    axios
+      .get(
+        `https://book-e-sell-node-api.vercel.app/api/book?pageSize=3&pageIndex=${currentPage.current}`
+      )
+      .then((res) => {
+        setPageCount(res.data.result.totalPages);
+        setBooks(res.data.result.items);
+      });
+  }
+
   return (
     <Wrapper className="container">
       {/* <div className="grid grid-three-column"> */}
@@ -30,6 +65,24 @@ const Products = () => {
         </div>
       )}
       {/* </div> */}
+      <br />
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+        containerClassName="pagination justify-content-center"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        activeClassName="active"
+      />
     </Wrapper>
   );
 };
