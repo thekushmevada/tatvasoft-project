@@ -19,14 +19,6 @@ const Products = () => {
   const currentPage = useRef();
   const [totalbooks, setTotalBooks] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("https://book-e-sell-node-api.vercel.app/api/book/all")
-  //     .then((res) => {
-  //       setBooks(res.data.result);
-  //     });
-  // }, []);
-
   useEffect(() => {
     currentPage.current = 1;
     getPaginatedUsers();
@@ -60,9 +52,11 @@ const Products = () => {
           <option selected hidden disabled>
             Sort by:
           </option>
+          <option disabled></option>
           <option>A-Z</option>
           <option disabled></option>
           <option>Z-A</option>
+          <option disabled></option>
         </select>
       </div>
       <br />
@@ -123,6 +117,27 @@ const Wrapper = styled.section`
     select {
       height: 5rem;
       width: 25rem;
+    }
+  }
+  @media (max-width: ${({ theme }) => theme.media.tab}){
+    .flexbox{
+      display:flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    input, select {
+      margin : 1rem;
+    }
+  }
+  @media (max-width: ${({ theme }) => theme.media.mobile}){
+    .flexbox{
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    input, select {
+      margin : 1rem;
     }
   }
   .paginate {

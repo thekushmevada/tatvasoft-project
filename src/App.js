@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import SearchBox from "./components/SearchBox";
+import EditBook from "./components/EditBook";
 import { AuthWrapper } from "./context/auth";
 
 const App = () => {
@@ -39,7 +40,6 @@ const App = () => {
     },
   };
 
-
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -54,6 +54,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<ErrorPage />} />
+          <Route path="/editbooks" element={<EditBook/>} />
         </Routes>
         <Footer />
         </AuthWrapper>

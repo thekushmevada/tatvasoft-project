@@ -10,7 +10,6 @@ const Login = () => {
   const [state, setState] = useState({ email: "", password: "" });
   const authContext = useAuthContext();
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios

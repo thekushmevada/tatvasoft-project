@@ -155,7 +155,6 @@ export default class SignUp extends Component {
                 <br />
                 <hr />
                 <br />
-                {/* <div className=""> */}
                   <select
                     name="roles"
                     id="role"
@@ -175,10 +174,8 @@ export default class SignUp extends Component {
                       Choose Role
                     </option>
                     <option value="buyer">Buyer</option>
-                    {/* <option value="" disabled></option> */}
                     <option value="seller">Seller</option>
                   </select>
-                {/* </div> */}
               <div>
                 <input type="submit" value="SignUp" />
                 </div>

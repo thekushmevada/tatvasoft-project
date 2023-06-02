@@ -10,6 +10,7 @@ import { useAuthContext } from "../context/auth";
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
   const authContext = useAuthContext();
+  const y = JSON.parse(localStorage.getItem("Shared.LocalStorageKeys.USER"));
 
   const Nav = styled.nav`
     .navbar-lists {
@@ -173,11 +174,36 @@ const Nav = () => {
     <Nav>
       <div className={menuIcon ? "navbar active" : "navbar"}>
         <ul className="navbar-lists">
+          <li>
+            <NavLink
+              to="/updateuser"
+              className="navbar-link"
+              onClick={() => setMenuIcon(false)}
+            >
+              Update User
+            </NavLink>
+          </li>
+          {localStorage.getItem("Shared.LocalStorageKeys.USER") ? (
+            <li>
+              {y.data.result.role === "seller" ? (
+                <li>
+                  <NavLink
+                    to="/editbooks"
+                    className="navbar-link"
+                    onClick={() => setMenuIcon(false)}
+                  >
+                    Books
+                  </NavLink>
+                </li>
+              ) : null}
+            </li>
+          ) : null}
 
           {localStorage.getItem("Shared.LocalStorageKeys.USER") ? (
             <li>
               <Button
                 onClick={() => {
+                  setMenuIcon(false);
                   authContext.signOut();
 
                   toast.info("Logged out Succesfully!", {
@@ -201,6 +227,7 @@ const Nav = () => {
             <li>
               <Button
                 onClick={() => {
+                  setMenuIcon(false);
                   window.location.href = "./register";
                 }}
               >
@@ -208,9 +235,8 @@ const Nav = () => {
               </Button>
             </li>
           )}
-          
-            {/* <p>|</p> */}
-          
+
+          {/* <p>|</p> */}
 
           {localStorage.getItem("Shared.LocalStorageKeys.USER") ? null : (
             <li>

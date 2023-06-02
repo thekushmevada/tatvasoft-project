@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -7,6 +7,13 @@ const SearchBox = () => {
   const [input, setinput] = useState("");
   const [results, setResults] = useState([]);
   const [openSearchResult, setOpenSearchResult] = useState(false);
+
+  useEffect((value) => {
+    const timer = setTimeout(() => {
+      fetchData(value);
+    } , 400);
+    return () => clearTimeout(timer);
+ } , [])
 
   const fetchData = async (value) => {
     axios
