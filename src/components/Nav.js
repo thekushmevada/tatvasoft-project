@@ -17,6 +17,7 @@ const Nav = () => {
       display: flex;
       gap: 4.8rem;
       align-items: center;
+z-index: 999;
 
       li {
         list-style: none;
