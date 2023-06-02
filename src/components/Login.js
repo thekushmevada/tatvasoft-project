@@ -26,9 +26,24 @@ const Login = () => {
           theme: "colored",
         });
         authContext.setUser(res);
-    window.location.href = "/books";
+        const timer = setTimeout(() => {
+          window.location.href = "/books";
+        }, 400);
+        return () => clearTimeout(timer);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast.error('Something went wrong!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+      });
   };
   return (
     <Wrapper>

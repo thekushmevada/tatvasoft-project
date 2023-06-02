@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useContext} from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
@@ -6,10 +6,12 @@ import { CgMenu, CgClose } from "react-icons/cg";
 import { Button } from "../styles/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuthContext } from "../context/auth";
+import { CartContext } from "../context/cartContext";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
   const authContext = useAuthContext();
+  const { cartItems } = useContext(CartContext);
   const y = JSON.parse(localStorage.getItem("Shared.LocalStorageKeys.USER"));
 
   const Nav = styled.nav`
@@ -257,7 +259,7 @@ z-index: 999;
           <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
-              {/* <span className="cart-total--item"> 0 </span> */}
+              <span className="cart-total--item"> {cartItems.length} </span>
             </NavLink>
           </li>
         </ul>

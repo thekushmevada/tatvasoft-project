@@ -15,6 +15,7 @@ import EditBook from "./components/EditBook";
 import { AuthWrapper } from "./context/auth";
 import UpdateUser from "./components/UpdateUser";
 import AddBook from "./components/AddBook";
+import { CartContextProvider } from "./context/cartContext";
 
 const App = () => {
   const theme = {
@@ -46,6 +47,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <AuthWrapper>
+        <CartContextProvider>
         <GlobalStyle />
         <Header />
         <SearchBox />
@@ -61,6 +63,7 @@ const App = () => {
           <Route path="/addbook" element={<AddBook />} />
         </Routes>
         <Footer />
+        </CartContextProvider>
         </AuthWrapper>
       </Router>
     </ThemeProvider>
