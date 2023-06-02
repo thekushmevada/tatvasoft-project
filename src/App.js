@@ -13,6 +13,8 @@ import Register from "./components/Register";
 import SearchBox from "./components/SearchBox";
 import EditBook from "./components/EditBook";
 import { AuthWrapper } from "./context/auth";
+import UpdateUser from "./components/UpdateUser";
+import AddBook from "./components/AddBook";
 
 const App = () => {
   const theme = {
@@ -55,6 +57,8 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<ErrorPage />} />
           <Route path="/editbooks" element={<EditBook/>} />
+          <Route path="/updateuser" element={localStorage.getItem("Shared.LocalStorageKeys.USER") ? <UpdateUser /> : <ErrorPage />} />
+          <Route path="/addbook" element={<AddBook />} />
         </Routes>
         <Footer />
         </AuthWrapper>

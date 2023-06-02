@@ -4,6 +4,8 @@ import styled from "styled-components";
 import axios from "axios";
 import EditBookItem from "./EditBookItem";
 import ReactPaginate from "react-paginate";
+import { Button } from "../styles/Button";
+import { NavLink } from "react-router-dom";
 
 const EditBook = () => {
   const y = JSON.parse(localStorage.getItem("Shared.LocalStorageKeys.USER"));
@@ -18,7 +20,9 @@ const EditBook = () => {
 
   useEffect(() => {
     currentPage.current = 1;
-    getPaginatedUsers();
+    if (rows){
+      getPaginatedUsers();
+    }  
   }, [rows]);
 
   // useEffect(() => {} , [])
@@ -44,12 +48,15 @@ const EditBook = () => {
       <Wrapper>
         <div className="container">
           <div className="jagya">
-            <h1>Book Page</h1>
+            <h1 >Book Page</h1>
           </div>
-          {/* <input placeholder="search book" /> */}
+          <div className="relative-name">
+            <input />
+            <Button><NavLink to="/addbook">Add Book</NavLink></Button>
+          </div>
           <hr />
           <div className="cart_heading grid grid-five-column">
-            <p>Book</p>
+            <p cla>Book</p>
             <p className="cart-hide">Price</p>
             <p>Category</p>
             <p>EditBook</p>
@@ -116,10 +123,41 @@ const Wrapper = styled.section`
     grid-template-columns: repeat(4, 1fr);
   }
 
+  .relative-name {
+    display: flex;
+    justify-content: right;
+    input, Button {
+      margin-left: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    } 
+  }
+
+  @media (max-width: ${({ theme }) => theme.media.tab}){
+    .relative-name{
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      
+    }
+  }
+  @media (max-width: ${({ theme }) => theme.media.mobile}){
+    .relative-name{
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      
+    }
+  }
+
   .jagya {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    h1 {
+      color: #5138ee;
+    }
   }
 
   .grid-five-column {

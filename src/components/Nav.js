@@ -174,15 +174,18 @@ const Nav = () => {
     <Nav>
       <div className={menuIcon ? "navbar active" : "navbar"}>
         <ul className="navbar-lists">
-          <li>
-            <NavLink
-              to="/updateuser"
-              className="navbar-link"
-              onClick={() => setMenuIcon(false)}
-            >
-              Update User
-            </NavLink>
-          </li>
+          {localStorage.getItem("Shared.LocalStorageKeys.USER") ? (
+            <li>
+              <NavLink
+                to="/updateuser"
+                className="navbar-link"
+                onClick={() => setMenuIcon(false)}
+              >
+                Update User
+              </NavLink>
+            </li>
+          ) : null}
+
           {localStorage.getItem("Shared.LocalStorageKeys.USER") ? (
             <li>
               {y.data.result.role === "seller" ? (
