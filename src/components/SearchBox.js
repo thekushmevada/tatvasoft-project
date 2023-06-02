@@ -122,7 +122,7 @@ const Wrapper = styled.section`
     border-radius: 5px;
     max-height: 300px;
     overflow-y: scroll;
-    z-index: 999;
+    
   }
   .result-box{
     display: flex;
