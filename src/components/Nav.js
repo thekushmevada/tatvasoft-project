@@ -6,12 +6,12 @@ import { CgMenu, CgClose } from "react-icons/cg";
 import { Button } from "../styles/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuthContext } from "../context/auth";
-import { CartContext } from "../context/cartContext";
+import { CartContext } from "../context/CartContext";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
   const authContext = useAuthContext();
-  const { cartItems } = useContext(CartContext);
+  const { numberOfItems } = useContext(CartContext);
   const y = JSON.parse(localStorage.getItem("Shared.LocalStorageKeys.USER"));
 
   const Nav = styled.nav`
@@ -248,6 +248,7 @@ z-index: 999;
             <li>
               <Button
                 onClick={() => {
+                  setMenuIcon(false);
                   window.location.href = "./";
                 }}
               >
@@ -259,7 +260,7 @@ z-index: 999;
           <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item"> {cartItems.length} </span>
+              <span className="cart-total--item"> {numberOfItems} </span>
             </NavLink>
           </li>
         </ul>

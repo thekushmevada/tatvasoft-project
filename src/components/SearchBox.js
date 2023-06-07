@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { CartContext } from "../context/cartContext";
 import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 const SearchBox = () => {
   const [input, setinput] = useState("");
@@ -11,12 +11,12 @@ const SearchBox = () => {
   const [openSearchResult, setOpenSearchResult] = useState(false);
   const inputRef = useRef(null);
   const [isInputClicked, setIsInputClicked] = useState(false);
-  const {  setCartItems } = useContext(CartContext);
+  const {addToCart } = useContext(CartContext);
 
-  function handleAddToCart(name, price) {
+  function handleAddToCart(id) {
     console.log("clicked");
-    setCartItems((prev) => [...prev, { name, price }]);
-  }
+    addToCart(id);
+}
 
   useEffect((value) => {
     const timer = setTimeout(() => {
@@ -58,6 +58,8 @@ const SearchBox = () => {
       });
   };
 
+  
+
   const handleChange = (value) => {
     setOpenSearchResult(true);
     setinput(value);
@@ -87,8 +89,8 @@ const SearchBox = () => {
                     <div className="result-box">
                       <div key={id}> {result.name} </div>
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <Link to="/">
-                          <button type="submit" className="add-to-cart-button" onClick={() => handleAddToCart(result.name, result.price)} >
+                        <Link to="/cart">
+                          <button type="submit" className="add-to-cart-button" onClick={() => handleAddToCart(result.id)}  >
                             Add to cart
                           </button>
                         </Link>

@@ -13,6 +13,7 @@ const EditBook = () => {
   const [pageCount, setPageCount] = useState(1);
   const currentPage = useRef();
   const [rows, setRows] = useState([5]);
+  const [keyword, setKeyword] = useState("");
   const Rows = [2, 5, 10, 20],
     MakeItem = function (X) {
       return <option>{X}</option>;
@@ -21,18 +22,34 @@ const EditBook = () => {
   useEffect(() => {
     currentPage.current = 1;
     if (rows){
-      getPaginatedUsers();
+      axios
+      .get(
+        `https://book-e-sell-node-api.vercel.app/api/book?pageSize=${rows}&pageIndex=${currentPage.current}`
+      )
+      .then((res) => {
+        setPageCount(res.data.result.totalPages);
+        setBooks(res.data.result.items);
+      });
     }  
   }, [rows]);
 
-  // useEffect(() => {} , [])
+
+  useEffect(() => {if (keyword) {
+    const timer = setTimeout(() => {
+      axios
+        .get(
+          `https://book-e-sell-node-api.vercel.app/api/book?pageSize=3&pageIndex=${currentPage.current}&keyword=${keyword}`
+        )
+        .then((res) => {
+          setPageCount(res.data.result.totalPages);
+          setBooks(res.data.result.items);
+        });
+    }, 300);
+    return () => clearTimeout(timer);
+  }} , [keyword])
 
   function handlePageClick(e) {
     currentPage.current = e.selected + 1;
-    getPaginatedUsers();
-  }
-
-  function getPaginatedUsers() {
     axios
       .get(
         `https://book-e-sell-node-api.vercel.app/api/book?pageSize=${rows}&pageIndex=${currentPage.current}`
@@ -43,6 +60,7 @@ const EditBook = () => {
       });
   }
 
+
   if (y.data.result.role === "seller") {
     return (
       <Wrapper>
@@ -51,7 +69,7 @@ const EditBook = () => {
             <h1 >Book Page</h1>
           </div>
           <div className="relative-name">
-            <input />
+            <input placeholder="search book" type="text" autoComplete="off" onChange={(e) => setKeyword(e.target.value)} />
             <Button><NavLink to="/addbook">Add Book</NavLink></Button>
           </div>
           <hr />
@@ -67,6 +85,7 @@ const EditBook = () => {
             {books.map((book) => {
               return (
                 <EditBookItem
+                id={book.id}
                   base64image={book.base64image}
                   name={book.name}
                   category={book.category}
@@ -101,7 +120,6 @@ const EditBook = () => {
                 onChange={(e) => {
                   setRows(e.target.value);
                   handlePageClick();
-                  
                 }}
               >
                 {Rows.map(MakeItem)}

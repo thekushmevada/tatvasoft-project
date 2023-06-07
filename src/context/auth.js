@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import React from "react";
 // import Shared from "../utils/shared";
 // import { RoutePaths } from "../utils/enum";
-import { useNavigate} from "react-router-dom";
+import {  useNavigate} from "react-router-dom";
 // import { toast } from "react-toastify";
 
 const intialUserValue = {
@@ -29,7 +29,7 @@ export const AuthWrapper = ({ children }) => {
   const [user, _setUser] = useState(intialUserValue);
 
   const navigate = useNavigate();
-//   const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
   const setUser = (user) => {
     console.log(user.email, user);
@@ -42,9 +42,9 @@ export const AuthWrapper = ({ children }) => {
       JSON.parse(localStorage.getItem("Shared.LocalStorageKeys.USER")) ||
       intialUserValue;
     // if the item doesn't exist, return null
-    if (!itemStr.id) {
-      navigate("/");
-    }
+    // if (!itemStr.id) {
+    //   navigate("/");
+    // }
     _setUser(itemStr);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,194 +1,186 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Navigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
-export default class SignUp extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      role: "",
-      password: "",
-      roleId: ""
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    
-  }
+const Register = () => {
+  const [role, setRole] = useState([]);
+  const [state, setState] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    roleId: [],
+    password: "",
+  });
 
-  
+  useEffect(() => {
+    axios
+      .get("https://book-e-sell-node-api.vercel.app/api/user/roles")
+      .then((res) => {
+        
+        setRole(res.data.result);
+      });
+  }, []);
 
-  handleSubmit(e) {
-      e.preventDefault();
-        const {firstName, lastName, email, password , roleId } =
-          this.state;
-      
-        // console.log(firstName + " " + lastName + " " + email + " "  + password + " " + " " + roleId) ;
-        fetch("https://book-e-sell-node-api.vercel.app/api/user", {
-          method: "POST",
-          crossDomain: true,
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-            firstName,
-            lastName,
-            email,
-            password,
-            roleId
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data, "userRegister");
-            <Navigate to="/" replace={true} />
-            toast.info('Registered Succesfully!', {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-              });
-              
-          });
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(state);
+    axios
+      .post("https://book-e-sell-node-api.vercel.app/api/user", state)
+      .then((res) => {
+        console.log(res, "userRegister");
+        toast.info("Registered Succesfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
 
-  render() {
-    return (
-      <Wrapper>
-        <h2 className="intro-data common-heading">Create account</h2>
-          <div className="container">
-            <div className="contact-form">
-              <form
-                onSubmit={this.handleSubmit}
-                method="POST"
-                className="contact-inputs"
-              >
-                <h3>Personal Information</h3>
-                <br />
-                <hr />
-                <br />
-                <div className="grid-two-column">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    name="firstName"
-                    required
-                    autoComplete="off"
-                    className="jagya"
-                    // value=""
-                    onChange={(e) => this.setState({ firstName: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Last name"
-                    name="lastName"
-                    required
-                    autoComplete="off"
-                    className="jagya"
-                    // value=""
-                    onChange={(e) => this.setState({ lastName: e.target.value })}
-                  />
-                </div>
-                <div className="grid-two-column">
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    required
-                    autoComplete="off"
-                    className="jagya"
-                    // value=""
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                  />
 
-                  <input
-                    type="number"
-                    placeholder="Phone No"
-                    name="phone"
-                    required
-                    autoComplete="off"
-                    className="jagya"
-                    // value=""
-                    // onChange={(e) => this.setState({ phone: e.target.value })}
-                  />
-                </div>
-
-                <br />
-                <h3>Login Information</h3>
-                <br />
-                <hr />
-                <br />
-                <div className="grid-two-column">
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    required
-                    autoComplete="off"
-                    className="jagya"
-                    // value=""
-                    onChange={(e) => this.setState({ password: e.target.value })}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    name="confirm-password"
-                    required
-                    autoComplete="off"
-                    className="jagya"
-                    // value=""
-                    // onChange={(e) => this.setState({ email: e.target.value })}
-                  />
-                </div>
-
-                <br />
-                <h3>Role Information</h3>
-                <br />
-                <hr />
-                <br />
-                  <select
-                    name="roles"
-                    id="role"
-                    className="jagya sort-selection--style"
-                    onChange={(e) => {
-                      // console.log(e.target.value);
-                      this.setState({ role: e.target.value })
-                      if(e.target.value === "buyer"){
-                        this.setState({roleId: 2})
-                      }
-                      else{
-                        this.setState({roleId: 3})
-                      }
-                    }}
-                  >
-                    <option value="" selected disabled hidden>
-                      Choose Role
-                    </option>
-                    <option value="buyer">Buyer</option>
-                    <option value="seller">Seller</option>
-                  </select>
-              <div>
-                <input type="submit" value="SignUp" />
-                </div>
-              </form>
+  return (
+    <Wrapper>
+      <h2 className="intro-data common-heading">Create account</h2>
+      <div className="container">
+        <div className="contact-form">
+          <form
+            onSubmit={handleSubmit}
+            className="contact-inputs"
+          >
+            <h3>Personal Information</h3>
+            <br />
+            <hr />
+            <br />
+            <div className="grid-two-column">
+              <input
+                type="text"
+                placeholder="First Name"
+                name="firstName"
+                required
+                autoComplete="off"
+                className="jagya"
+                // value=""
+                onChange={(e) =>
+                  setState({ ...state, firstName: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Last name"
+                name="lastName"
+                required
+                autoComplete="off"
+                className="jagya"
+                // value=""
+                onChange={(e) =>
+                  setState({ ...state, lastName: e.target.value })
+                }
+              />
             </div>
-          </div>
-          <ToastContainer/>
-      </Wrapper>
-    );
-  }
-}
+            <div className="grid-two-column">
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                required
+                autoComplete="off"
+                className="jagya"
+                // value=""
+                onChange={(e) => setState({ ...state, email: e.target.value })}
+              />
 
-// export default Contact;
+              <input
+                type="number"
+                placeholder="Phone No"
+                name="phone"
+                required
+                autoComplete="off"
+                className="jagya"
+                // value=""
+                // onChange={(e) => this.setState({ phone: e.target.value })}
+              />
+            </div>
+
+            <br />
+            <h3>Login Information</h3>
+            <br />
+            <hr />
+            <br />
+            <div className="grid-two-column">
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                required
+                autoComplete="off"
+                className="jagya"
+                // value=""
+                onChange={(e) =>
+                  setState({ ...state, password: e.target.value })
+                }
+              />
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                name="confirm-password"
+                required
+                autoComplete="off"
+                className="jagya"
+                // value=""
+                // onChange={(e) => this.setState({ email: e.target.value })}
+              />
+            </div>
+
+            <br />
+            <h3>Role Information</h3>
+            <br />
+            <hr />
+            <br />
+
+            <select
+              name="role"
+              className="jagya sort-selection--style"
+              onChange={(e) => setState({...state, roleId: e.target.value})}
+            >
+              {role.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.name}
+                </option>
+              ))}
+            </select>
+            <div>
+              <input type="submit" value="SignUp" />
+            </div>
+          </form>
+        </div>
+      </div>
+      <ToastContainer />
+    </Wrapper>
+  );
+};
+
+export default Register;
 
 const Wrapper = styled.section`
   padding: 7rem 0 5rem 0;

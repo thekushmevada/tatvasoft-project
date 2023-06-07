@@ -18,6 +18,8 @@ const Products = () => {
   const [pageCount, setPageCount] = useState(1);
   const currentPage = useRef();
   const [totalbooks, setTotalBooks] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [sortBy , setSortBy] = useState();
 
   useEffect(() => {
     currentPage.current = 1;
@@ -32,7 +34,7 @@ const Products = () => {
   function getPaginatedUsers() {
     axios
       .get(
-        `https://book-e-sell-node-api.vercel.app/api/book?pageSize=3&pageIndex=${currentPage.current}`
+        `https://book-e-sell-node-api.vercel.app/api/book?pageSize=9&pageIndex=${currentPage.current}`
       )
       .then((res) => {
         // console.log(res.data.result);
@@ -42,20 +44,74 @@ const Products = () => {
       });
   }
 
+  useEffect(() => {
+    if (keyword) {
+      const timer = setTimeout(() => {
+        axios
+          .get(
+            `https://book-e-sell-node-api.vercel.app/api/book?pageSize=3&pageIndex=${currentPage.current}&keyword=${keyword}`
+          )
+          .then((res) => {
+            setPageCount(res.data.result.totalPages);
+            setBooks(res.data.result.items);
+            setTotalBooks(res.data.result.totalItems);
+          });
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      getPaginatedUsers();
+    }
+  }, [keyword]);
+
+  const sortBooks = (e) => {
+    setSortBy(e.target.value);
+    const bookList = [...books];
+
+    bookList.sort((a, b) => {
+      if (a.name < b.name) {
+        return e.target.value === "a-z" ? -1 : 1;
+      }
+      if (a.name > b.name) {
+        return e.target.value === "a-z" ? 1 : -1;
+      }
+      return 0;
+    });
+    setBooks( bookList );
+  };
+
+  // const addToCart = (book) => {
+  //   shared.addToCart(book, authContext.user.id).then((res) => {
+  //     if (res.error) {
+  //       toast.error(res.message);
+  //     } else {
+  //       toast.success(res.message);
+  //       cartContext.updateCart();
+  //     }
+  //   });
+  // };
+
   return (
     <Wrapper className="container">
       <div className="flexbox">
         <h2>Total Items : {totalbooks}</h2>
 
-        <input placeholder="search book" />
-        <select>
+        <input
+          type="text"
+          name="search"
+          autoComplete="off"
+          placeholder="search book"
+          onChange={(e) => {
+            setKeyword(e.target.value);
+          }}
+        />
+        <select onChange={sortBooks} value={sortBy} >
           <option selected hidden disabled>
             Sort by:
           </option>
           <option disabled></option>
-          <option>A-Z</option>
+          <option value='a-z'>A-Z</option>
           <option disabled></option>
-          <option>Z-A</option>
+          <option value='z-a'>Z-A</option>
           <option disabled></option>
         </select>
       </div>
@@ -119,25 +175,27 @@ const Wrapper = styled.section`
       width: 25rem;
     }
   }
-  @media (max-width: ${({ theme }) => theme.media.tab}){
-    .flexbox{
-      display:flex;
+  @media (max-width: ${({ theme }) => theme.media.tab}) {
+    .flexbox {
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    input, select {
-      margin : 1rem;
+    input,
+    select {
+      margin: 1rem;
     }
   }
-  @media (max-width: ${({ theme }) => theme.media.mobile}){
-    .flexbox{
+  @media (max-width: ${({ theme }) => theme.media.mobile}) {
+    .flexbox {
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    input, select {
-      margin : 1rem;
+    input,
+    select {
+      margin: 1rem;
     }
   }
   .paginate {

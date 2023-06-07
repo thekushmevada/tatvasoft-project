@@ -15,7 +15,8 @@ import EditBook from "./components/EditBook";
 import { AuthWrapper } from "./context/auth";
 import UpdateUser from "./components/UpdateUser";
 import AddBook from "./components/AddBook";
-import { CartContextProvider } from "./context/cartContext";
+import { CartContextProvider } from "./context/CartContext";
+
 
 const App = () => {
   const theme = {

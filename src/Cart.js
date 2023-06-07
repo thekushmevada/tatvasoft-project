@@ -2,8 +2,20 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "./styles/Button";
 import CartItem from "./components/CartItem";
+import { CartContext } from "./context/CartContext";
+import { useContext } from "react";
+import { useState } from "react";
 
 const Cart = () => {
+  const { total, details , placeOrder} = useContext(CartContext);
+  // const [arr, setArr] = useState([]);
+  // console.log(details[0].id);
+  const keyValueArray = details.map(obj => {
+    // Extracting the key-value pair from each object
+    const { id } = obj;
+    return  id ;
+  });
+  console.log(keyValueArray);
   return (
     <Wrapper>
       <div className="container">
@@ -17,44 +29,35 @@ const Cart = () => {
         <hr />
 
         <div className="cart-item">
-          {/* {cart.map((curElem) => {
-            return <CartItem key={curElem._id} {...curElem} />;
-          })} */}
-          <CartItem />;
-          <CartItem />;
+          {details.map((book) => {
+            return <CartItem key={book.id} {...book} />;
+          })}
         </div>
-
 
         <div className="cart-two-button">
           <NavLink to="/books">
             <Button> continue Shopping </Button>
           </NavLink>
-          <Button className="btn btn-clear">
-            clear cart
+          <Button
+            onClick={() => {
+              placeOrder(keyValueArray);
+            }}
+          >
+            Place Order
           </Button>
         </div>
-
 
         <div className="order-total--amount">
           <div className="order-total--subdata">
             <div>
               <p>subtotal:</p>
-              <p>
-                {/* <FormatPrice price={total_price} /> */}
-              </p>
+              <p>{total}</p>
             </div>
-            <div>
-              <p>shipping fee:</p>
-              <p>
-                {/* <FormatPrice price={shipping_fee} /> */}
-              </p>
-            </div>
+
             <hr />
             <div>
               <p>order total:</p>
-              <p>
-                {/* <FormatPrice price={shipping_fee + total_price} /> */}
-              </p>
+              <p>{total}</p>
             </div>
           </div>
         </div>

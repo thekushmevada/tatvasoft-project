@@ -3,10 +3,19 @@ import { AuthContext, useAuthContext } from "../context/auth";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import styled from "styled-components";
+import { useEffect } from "react";
 
 const UpdateUser = () => {
   const authContext = useAuthContext();
   const { user } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   if(user && user.data && user.data.result){
+  //     handleChange(user);
+  //   }
+  // } , [user])
+
+  
 
   const [state, setState] = useState({
     id: user.data.result.id,

@@ -1,0 +1,26 @@
+const [bookResponse, setBookResponse] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+    totalPages: 1,
+    items: [],
+    totalItems: 0,
+  });
+
+const getAll = async (params) => {
+  const url = `${ENDPOINT}`;
+  return request.get(url, { params }).then((res) => {
+    return res;
+  });
+};
+
+const searchAllBooks = (filters) => {
+    bookService.getAll(filters).then((res) => {
+      setBookResponse(res);
+    });
+  };
+
+const searchAllBooks = (filters) => {
+    bookService.getAll(filters).then((res) => {
+      setBookResponse(res);
+    });
+  };
