@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "./auth";
 import axios from "axios";
+import { toast } from "react-toastify";
 export const CartContext = createContext({});
 
 export function CartContextProvider({ children }) {
@@ -99,18 +100,38 @@ export function CartContextProvider({ children }) {
     updateCart();
   }
 
-  async function placeOrder( cartId) {
-    const data = {
-      userId: user.data.result.id,
-      cartId: cartId,
-    };
+  async function placeOrder() {
+    if (numberOfItems > 0) {
 
-    await axios
-      .post(`https://book-e-sell-node-api.vercel.app/api/order`, data)
-      .then((res) => {
-        return res;
-      });
-  }
+        let cartIds = [];
+        for (let i = 0; i < details.length; i++) {
+            cartIds.push(details[i].id);
+        }
+
+        const data = {
+            userId: user.data.result.id,
+            cartIds,
+        }
+        await axios.post(`https://book-e-sell-node-api.vercel.app/api/order`, data)
+        .then((res) => {
+          toast.info("Order placed!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          })
+        })
+        setTotal(0);
+        updateCart();
+    } else {
+        alert("Cart Empty");
+    }
+
+}
 
   return (
     <CartContext.Provider

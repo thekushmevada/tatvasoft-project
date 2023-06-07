@@ -4,18 +4,19 @@ import { Button } from "./styles/Button";
 import CartItem from "./components/CartItem";
 import { CartContext } from "./context/CartContext";
 import { useContext } from "react";
-import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 const Cart = () => {
-  const { total, details , placeOrder} = useContext(CartContext);
-  // const [arr, setArr] = useState([]);
-  // console.log(details[0].id);
-  const keyValueArray = details.map(obj => {
-    // Extracting the key-value pair from each object
-    const { id } = obj;
-    return  id ;
-  });
-  console.log(keyValueArray);
+  const { total, details , placeOrder, numberOfItems} = useContext(CartContext);
+
+  if(numberOfItems === 0){
+    return(
+      <EmptyDiv>
+        <h3>No Items added in cart</h3>
+      </EmptyDiv>
+    );
+  }
+ 
   return (
     <Wrapper>
       <div className="container">
@@ -40,7 +41,7 @@ const Cart = () => {
           </NavLink>
           <Button
             onClick={() => {
-              placeOrder(keyValueArray);
+              placeOrder();
             }}
           >
             Place Order
@@ -62,9 +63,20 @@ const Cart = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </Wrapper>
   );
 };
+const EmptyDiv = styled.div`
+  display: grid;
+  place-items: center;
+  height: 50vh;
+  h3 {
+    font-size: 4.2rem;
+    text-transform: capitalize;
+    font-weight: 300;
+  }
+`;
 
 const Wrapper = styled.section`
   padding: 9rem 0;
