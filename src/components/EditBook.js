@@ -8,7 +8,7 @@ import { Button } from "../styles/Button";
 import { NavLink } from "react-router-dom";
 
 const EditBook = () => {
-  const y = JSON.parse(localStorage.getItem("Shared.LocalStorageKeys.USER"));
+  const y = JSON.parse(localStorage.getItem("user"));
   const [books, setBooks] = useState([]);
   const [pageCount, setPageCount] = useState(1);
   const currentPage = useRef();
@@ -61,7 +61,7 @@ const EditBook = () => {
       });
   }
 
-  if (y.data.result.role === "seller") {
+  if (y.result.role === "seller") {
     return (
       <Wrapper>
         <div className="container">

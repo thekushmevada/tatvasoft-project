@@ -12,10 +12,8 @@ import Footer from "./components/Footer";
 import Register from "./components/Register";
 import SearchBox from "./components/SearchBox";
 import EditBook from "./components/EditBook";
-import { AuthWrapper } from "./context/auth";
 import UpdateUser from "./components/UpdateUser";
 import AddBook from "./components/AddBook";
-import { CartContextProvider } from "./context/CartContext";
 import { Provider } from "react-redux";
 import store from "./state/store";
 
@@ -49,25 +47,32 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Provider store={store}>
-        <AuthWrapper>
-        <CartContextProvider>
-        <GlobalStyle />
-        <Header />
-        <SearchBox />
-        <Routes>
-          <Route path="/" element={localStorage.getItem("user") ? <Products/> : <Home/>}  />
-          <Route path="/books" element={localStorage.getItem("user") ? <Products/> : <Home/>} />
-          <Route path="/singleproduct/:id" element={<SingleProduct />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="*" element={<ErrorPage />} />
-          <Route path="/editbooks" element={<EditBook/>} />
-          <Route path="/updateuser" element={localStorage.getItem("user") ? <UpdateUser /> : <ErrorPage />} />
-          <Route path="/addbook" element={<AddBook />} />
-        </Routes>
-        <Footer />
-        </CartContextProvider>
-        </AuthWrapper>
+          <GlobalStyle />
+          <Header />
+          <SearchBox />
+          <Routes>
+            <Route
+              path="/"
+              element={localStorage.getItem("user") ? <Products /> : <Home />}
+            />
+            <Route
+              path="/books"
+              element={localStorage.getItem("user") ? <Products /> : <Home />}
+            />
+            <Route path="/singleproduct/:id" element={<SingleProduct />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<ErrorPage />} />
+            <Route path="/editbooks" element={<EditBook />} />
+            <Route
+              path="/updateuser"
+              element={
+                localStorage.getItem("user") ? <UpdateUser /> : <ErrorPage />
+              }
+            />
+            <Route path="/addbook" element={<AddBook />} />
+          </Routes>
+          <Footer />
         </Provider>
       </Router>
     </ThemeProvider>
@@ -75,5 +80,3 @@ const App = () => {
 };
 
 export default App;
-
-

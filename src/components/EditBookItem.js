@@ -1,16 +1,16 @@
-import axios from "axios";
 import React from "react";
 import { Button } from "../styles/Button";
+import { deleteBook } from "../state/slice/bookReducer";
+import { useDispatch } from "react-redux";
 
 const EditBookItem = (book) => {
 
-  const deleteBook = async (e) => {
-    axios.delete(`https://book-e-sell-node-api.vercel.app/api/book?id=${e}`)
-    .then((res) => {
-      console.log(res);
-      console.log("book deleted");
-    })
-  }
+  const dispatch = useDispatch();
+
+  const handleDelete = (e) => {
+    dispatch(deleteBook(e));
+  };
+
 
   return (
     <div className="cart_heading grid grid-five-column">
@@ -37,7 +37,7 @@ const EditBookItem = (book) => {
       </div>
 
       <div>
-        <Button onClick={() => deleteBook(book.id)}>DeleteBook</Button>
+        <Button onClick={() => handleDelete(book.id)}>DeleteBook</Button>
       </div>
     </div>
   );

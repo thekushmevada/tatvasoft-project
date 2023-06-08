@@ -63,9 +63,10 @@ const Login = () => {
             // value=""
             onChange={(e) =>setPassword(e.target.value)}
           />
-
+  
           <div>
-            <Button>
+            <br />
+            <Button type="submit"  >
             {isLoading ? 'Logging in...' : 'Log in'}
             </Button>
             {error && <p>{error}</p>}
@@ -83,16 +84,21 @@ const Wrapper = styled.section`
 
   .container {
     margin-top: 6rem;
+    
 
     .contact-form {
       max-width: 50rem;
       margin: auto;
+
+      
 
       .contact-inputs {
         // width:100p
         display: flex;
         flex-direction: column;
         gap: 3rem;
+
+        
 
         input[type="submit"] {
           cursor: pointer;
