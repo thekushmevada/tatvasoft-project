@@ -5,16 +5,25 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { submitForm } from "../state/slice/formReducer";
 
 const Register = () => {
   const [role, setRole] = useState([]);
-  const [state, setState] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    roleId: [],
-    password: "",
-  });
+  // const [state, setState] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   roleId: [],
+  //   password: "",
+  // });
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [roleId, setRoleId] = useState(2);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -25,39 +34,62 @@ const Register = () => {
       });
   }, []);
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(state);
+  //   axios
+  //     .post("https://book-e-sell-node-api.vercel.app/api/user", state)
+  //     .then((res) => {
+  //       console.log(res, "userRegister");
+  //       toast.info("Registered Succesfully!", {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "colored",
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       toast.error("Something went wrong!", {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "colored",
+  //       });
+  //     });
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
-    axios
-      .post("https://book-e-sell-node-api.vercel.app/api/user", state)
-      .then((res) => {
-        console.log(res, "userRegister");
-        toast.info("Registered Succesfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      });
-  };
 
+    // Create the form data object
+    const formData = {
+      firstName,
+      lastName,
+      email,
+      password,
+      roleId
+    };
+
+    // Dispatch the submitForm action with the form data
+    console.log(formData);
+    dispatch(submitForm(formData));
+
+    // Reset the form fields
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+    setRoleId("");
+  };
 
   return (
     <Wrapper>
@@ -82,8 +114,7 @@ const Register = () => {
                 className="jagya"
                 // value=""
                 onChange={(e) =>
-                  setState({ ...state, firstName: e.target.value })
-                }
+setFirstName(e.target.value)                }
               />
               <input
                 type="text"
@@ -94,8 +125,7 @@ const Register = () => {
                 className="jagya"
                 // value=""
                 onChange={(e) =>
-                  setState({ ...state, lastName: e.target.value })
-                }
+setLastName(e.target.value)                }
               />
             </div>
             <div className="grid-two-column">
@@ -107,7 +137,7 @@ const Register = () => {
                 autoComplete="off"
                 className="jagya"
                 // value=""
-                onChange={(e) => setState({ ...state, email: e.target.value })}
+                onChange={(e) =>setEmail(e.target.value)}
               />
 
               <input
@@ -137,7 +167,7 @@ const Register = () => {
                 className="jagya"
                 // value=""
                 onChange={(e) =>
-                  setState({ ...state, password: e.target.value })
+                  setPassword(e.target.value)
                 }
               />
               <input
@@ -161,8 +191,9 @@ const Register = () => {
             <select
               name="role"
               className="jagya sort-selection--style"
-              onChange={(e) => setState({...state, roleId: e.target.value})}
+              onChange={(e) => setRoleId(Number(e.target.value))}
             >
+              <option selected hidden default>Select Role</option>
               {role.map((r) => (
                 <option key={r.id} value={r.id}>
                   {r.name}
