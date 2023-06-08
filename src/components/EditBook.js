@@ -21,32 +21,33 @@ const EditBook = () => {
 
   useEffect(() => {
     currentPage.current = 1;
-    if (rows){
-      axios
-      .get(
-        `https://book-e-sell-node-api.vercel.app/api/book?pageSize=${rows}&pageIndex=${currentPage.current}`
-      )
-      .then((res) => {
-        setPageCount(res.data.result.totalPages);
-        setBooks(res.data.result.items);
-      });
-    }  
-  }, [rows]);
-
-
-  useEffect(() => {if (keyword) {
-    const timer = setTimeout(() => {
+    if (rows) {
       axios
         .get(
-          `https://book-e-sell-node-api.vercel.app/api/book?pageSize=3&pageIndex=${currentPage.current}&keyword=${keyword}`
+          `https://book-e-sell-node-api.vercel.app/api/book?pageSize=${rows}&pageIndex=${currentPage.current}`
         )
         .then((res) => {
           setPageCount(res.data.result.totalPages);
           setBooks(res.data.result.items);
         });
-    }, 300);
-    return () => clearTimeout(timer);
-  }} , [keyword])
+    }
+  }, [rows]);
+
+  useEffect(() => {
+    if (keyword) {
+      const timer = setTimeout(() => {
+        axios
+          .get(
+            `https://book-e-sell-node-api.vercel.app/api/book?pageSize=3&pageIndex=${currentPage.current}&keyword=${keyword}`
+          )
+          .then((res) => {
+            setPageCount(res.data.result.totalPages);
+            setBooks(res.data.result.items);
+          });
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [keyword]);
 
   function handlePageClick(e) {
     currentPage.current = e.selected + 1;
@@ -60,17 +61,23 @@ const EditBook = () => {
       });
   }
 
-
   if (y.data.result.role === "seller") {
     return (
       <Wrapper>
         <div className="container">
           <div className="jagya">
-            <h1 >Book Page</h1>
+            <h1>Book Page</h1>
           </div>
           <div className="relative-name">
-            <input placeholder="search book" type="text" autoComplete="off" onChange={(e) => setKeyword(e.target.value)} />
-            <Button><NavLink to="/addbook">Add Book</NavLink></Button>
+            <input
+              placeholder="search book"
+              type="text"
+              autoComplete="off"
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <Button>
+              <NavLink to="/addbook">Add Book</NavLink>
+            </Button>
           </div>
           <hr />
           <div className="cart_heading grid grid-five-column">
@@ -85,7 +92,7 @@ const EditBook = () => {
             {books.map((book) => {
               return (
                 <EditBookItem
-                id={book.id}
+                  id={book.id}
                   base64image={book.base64image}
                   name={book.name}
                   category={book.category}
@@ -144,27 +151,26 @@ const Wrapper = styled.section`
   .relative-name {
     display: flex;
     justify-content: right;
-    input, Button {
+    input,
+    Button {
       margin-left: 2rem;
       margin-top: 2rem;
       margin-bottom: 2rem;
-    } 
-  }
-
-  @media (max-width: ${({ theme }) => theme.media.tab}){
-    .relative-name{
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      
     }
   }
-  @media (max-width: ${({ theme }) => theme.media.mobile}){
-    .relative-name{
+
+  @media (max-width: ${({ theme }) => theme.media.tab}) {
+    .relative-name {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      
+    }
+  }
+  @media (max-width: ${({ theme }) => theme.media.mobile}) {
+    .relative-name {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
   }
 

@@ -122,6 +122,7 @@ const Products = () => {
           <div className="grid grid-three-column">
             {books.map((book) => (
               <Product
+              id={book.id}
                 base64image={book.base64image}
                 name={book.name}
                 category={book.category}

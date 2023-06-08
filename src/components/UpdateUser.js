@@ -3,7 +3,6 @@ import { AuthContext, useAuthContext } from "../context/auth";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import styled from "styled-components";
-import { useEffect } from "react";
 
 const UpdateUser = () => {
   const authContext = useAuthContext();

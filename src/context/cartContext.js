@@ -45,7 +45,7 @@ export function CartContextProvider({ children }) {
   async function addToCart(id) {
     let isBookExist = 0;
 
-    console.log(details);
+    // console.log(details);
     for (let i = 0; i < details.length; i++) {
       if (details[i].bookId === id) {
         isBookExist = 1;

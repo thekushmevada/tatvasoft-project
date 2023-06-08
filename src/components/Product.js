@@ -1,12 +1,19 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { Button } from "../styles/Button";
 import styled from "styled-components";
+import { CartContext } from "../context/CartContext";
+import { useContext } from "react";
 
 const Product = (book) => {
-  //  { id, name, base64image, price , category} = curElem;
+  const {addToCart } = useContext(CartContext);
+
+  // console.log(book);
+
+  function handleAddToCart(id) {
+    addToCart(id);
+}
+
   return (
-    // <NavLink to={`/singleproduct/${_id}`}>
     <Wrapper>
       <div className="card">
         <figure>
@@ -21,11 +28,10 @@ const Product = (book) => {
           </div>
           <p>{book.description.slice(0, 35) + "..."}</p>
         </div>
-        <NavLink to="/cart">
-          <Button className="btn-clear btn-c"> Add to cart</Button>
-        </NavLink>
+        {/* <NavLink to="/"> */}
+          <Button className="btn-clear btn-c" onClick={() => handleAddToCart(book.id)}> Add to cart</Button>
+        {/* </NavLink>/ */}
       </div>
-      {/* //  </NavLink> */}
     </Wrapper>
   );
 };
