@@ -55,14 +55,14 @@ const App = () => {
         <Header />
         <SearchBox />
         <Routes>
-          <Route path="/" element={localStorage.getItem("Shared.LocalStorageKeys.USER") ? <Products/> : <Home/>}  />
-          <Route path="/books" element={localStorage.getItem("Shared.LocalStorageKeys.USER") ? <Products/> : <Home/>} />
+          <Route path="/" element={localStorage.getItem("user") ? <Products/> : <Home/>}  />
+          <Route path="/books" element={localStorage.getItem("user") ? <Products/> : <Home/>} />
           <Route path="/singleproduct/:id" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<ErrorPage />} />
           <Route path="/editbooks" element={<EditBook/>} />
-          <Route path="/updateuser" element={localStorage.getItem("Shared.LocalStorageKeys.USER") ? <UpdateUser /> : <ErrorPage />} />
+          <Route path="/updateuser" element={localStorage.getItem("user") ? <UpdateUser /> : <ErrorPage />} />
           <Route path="/addbook" element={<AddBook />} />
         </Routes>
         <Footer />

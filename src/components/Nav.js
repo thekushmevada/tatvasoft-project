@@ -5,14 +5,16 @@ import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { Button } from "../styles/Button";
 import { ToastContainer, toast } from "react-toastify";
-import { useAuthContext } from "../context/auth";
 import { CartContext } from "../context/CartContext";
+import { signOutUser } from "../state/slice/authReducer";
+import { useDispatch } from "react-redux";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
-  const authContext = useAuthContext();
   const { numberOfItems } = useContext(CartContext);
-  const y = JSON.parse(localStorage.getItem("Shared.LocalStorageKeys.USER"));
+  const dispatch = useDispatch();
+  const y = JSON.parse(localStorage.getItem("user"));
+  // console.log(y.result.role);
 
   const Nav = styled.nav`
     .navbar-lists {
@@ -177,7 +179,7 @@ z-index: 999;
     <Nav>
       <div className={menuIcon ? "navbar active" : "navbar"}>
         <ul className="navbar-lists">
-          {localStorage.getItem("Shared.LocalStorageKeys.USER") ? (
+          {localStorage.getItem("user") ? (
             <li>
               <NavLink
                 to="/updateuser"
@@ -189,9 +191,9 @@ z-index: 999;
             </li>
           ) : null}
 
-          {localStorage.getItem("Shared.LocalStorageKeys.USER") ? (
+          {localStorage.getItem("user") ? (
             <li>
-              {y.data.result.role === "seller" ? (
+              {y.result.role === "seller" ? (
                 <li>
                   <NavLink
                     to="/editbooks"
@@ -205,12 +207,12 @@ z-index: 999;
             </li>
           ) : null}
 
-          {localStorage.getItem("Shared.LocalStorageKeys.USER") ? (
+          {localStorage.getItem("user") ? (
             <li>
               <Button
                 onClick={() => {
                   setMenuIcon(false);
-                  authContext.signOut();
+                  dispatch(signOutUser()) ;
 
                   toast.info("Logged out Succesfully!", {
                     position: "top-right",
@@ -244,7 +246,7 @@ z-index: 999;
 
           {/* <p>|</p> */}
 
-          {localStorage.getItem("Shared.LocalStorageKeys.USER") ? null : (
+          {localStorage.getItem("user") ? null : (
             <li>
               <Button
                 onClick={() => {
